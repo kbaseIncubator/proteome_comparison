@@ -13,6 +13,7 @@ RUN tar -zxvf blast.tar.gz
 # -----------------------------------------
 
 COPY ./ /kb/module
+RUN mkdir -p /kb/module/bin
 RUN mv ./ncbi-blast-2.2.29+/bin/* /kb/module/bin/
 RUN ls -l /kb/module/bin
 RUN mkdir -p /kb/module/work
