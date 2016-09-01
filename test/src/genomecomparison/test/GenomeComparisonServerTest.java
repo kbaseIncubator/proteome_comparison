@@ -21,6 +21,7 @@ import org.junit.Test;
 import genomecomparison.BlastProteomesParams;
 import genomecomparison.GenomeComparisonServer;
 import genomecomparison.ProteomeComparison;
+import us.kbase.auth.AuthService;
 import us.kbase.auth.AuthToken;
 import us.kbase.common.service.JsonServerSyslog;
 import us.kbase.common.service.RpcContext;
@@ -44,7 +45,7 @@ public class GenomeComparisonServerTest {
     
     @BeforeClass
     public static void init() throws Exception {
-        token = new AuthToken(System.getenv("KB_AUTH_TOKEN"));
+        token = AuthService.validateToken(System.getenv("KB_AUTH_TOKEN"));
         String configFilePath = System.getenv("KB_DEPLOYMENT_CONFIG");
         File deploy = new File(configFilePath);
         Ini ini = new Ini(deploy);

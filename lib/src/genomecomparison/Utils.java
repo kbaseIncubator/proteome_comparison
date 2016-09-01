@@ -3,6 +3,9 @@ package genomecomparison;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
+
+import us.kbase.common.service.Tuple11;
 
 public class Utils {
     public static int compare(long x, long y) {
@@ -25,5 +28,10 @@ public class Utils {
     		total += r;
     	}
     	return total;
+    }
+    
+    public static String getRefFromObjectInfo(Tuple11<Long, String, String, String, 
+            Long, String, Long, String, String, Long, Map<String,String>> info) {
+        return info.getE7() + "/" + info.getE1() + "/" + info.getE5();
     }
 }

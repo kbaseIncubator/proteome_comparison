@@ -1,6 +1,8 @@
 package genomecomparison;
 
 import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import us.kbase.auth.AuthToken;
 import us.kbase.common.service.JsonServerMethod;
 import us.kbase.common.service.JsonServerServlet;
@@ -17,6 +19,9 @@ import us.kbase.common.service.RpcContext;
  */
 public class GenomeComparisonServer extends JsonServerServlet {
     private static final long serialVersionUID = 1L;
+    private static final String version = "0.0.1";
+    private static final String gitUrl = "https://github.com/kbaseIncubator/proteome_comparison.git";
+    private static final String gitCommitHash = "4e96f3a6193dfe5d7ddd0121f40192299b3b2f74";
 
     //BEGIN_CLASS_HEADER
     //END_CLASS_HEADER
@@ -38,8 +43,21 @@ public class GenomeComparisonServer extends JsonServerServlet {
     public String blastProteomes(BlastProteomesParams input, AuthToken authPart, RpcContext jsonRpcContext) throws Exception {
         String returnVal = null;
         //BEGIN blast_proteomes
-        BlastProteomes.run(authPart.toString(), input, config);
+        returnVal = new BlastProteomes(authPart, config).run(input);
         //END blast_proteomes
+        return returnVal;
+    }
+    @JsonServerMethod(rpc = "GenomeComparison.status")
+    public Map<String, Object> status() {
+        Map<String, Object> returnVal = null;
+        //BEGIN_STATUS
+        returnVal = new LinkedHashMap<String, Object>();
+        returnVal.put("state", "OK");
+        returnVal.put("message", "");
+        returnVal.put("version", version);
+        returnVal.put("git_url", gitUrl);
+        returnVal.put("git_commit_hash", gitCommitHash);
+        //END_STATUS
         return returnVal;
     }
 

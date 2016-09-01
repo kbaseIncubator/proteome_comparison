@@ -2,7 +2,7 @@ module GenomeComparison {
 
     /*
         A workspace ID that references a Genome data object.
-        @id ws KBaseGenomes.Genome
+        @id ws KBaseGenomes.Genome KBaseGenomeAnnotations.GenomeAnnotation
     */
     typedef string ws_genome_id;
 
