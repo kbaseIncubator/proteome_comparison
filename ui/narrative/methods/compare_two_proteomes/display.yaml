@@ -55,9 +55,9 @@ parameters :
         ui-name : |
             Output Proteome Comparison
         short-hint : |
-            Output proteome comparison; if empty, a name will be chosen randomly
+            Output proteome comparison
         long-hint  : |
-            Output proteome comparison; if empty, a name will be chosen randomly
+            Output proteome comparison
 
     param_max_eval :
         ui-name : |
