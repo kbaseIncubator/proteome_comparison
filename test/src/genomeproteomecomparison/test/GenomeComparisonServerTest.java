@@ -1,4 +1,4 @@
-package genomecomparison.test;
+package genomeproteomecomparison.test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,17 +18,18 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import genomecomparison.BlastProteomesParams;
-import genomecomparison.GenomeComparisonServer;
 import genomecomparison.ProteomeComparison;
+import genomeproteomecomparison.BlastProteomesParams;
+import genomeproteomecomparison.GenomeProteomeComparisonServer;
 import us.kbase.auth.AuthService;
 import us.kbase.auth.AuthToken;
 import us.kbase.common.service.JsonServerSyslog;
 import us.kbase.common.service.RpcContext;
 import us.kbase.common.service.UObject;
 import us.kbase.workspace.CreateWorkspaceParams;
-import us.kbase.workspace.ObjectIdentity;
+import us.kbase.workspace.GetObjects2Params;
 import us.kbase.workspace.ObjectSaveData;
+import us.kbase.workspace.ObjectSpecification;
 import us.kbase.workspace.ProvenanceAction;
 import us.kbase.workspace.SaveObjectsParams;
 import us.kbase.workspace.WorkspaceClient;
@@ -39,7 +40,7 @@ public class GenomeComparisonServerTest {
     private static Map<String, String> config = null;
     private static WorkspaceClient wsClient = null;
     private static String wsName = null;
-    private static GenomeComparisonServer impl = null;
+    private static GenomeProteomeComparisonServer impl = null;
     private static String genome1objName = "Ecoli_042.genome";
     private static String genome2objName = "Ecoli_K12.genome";
     
@@ -49,13 +50,13 @@ public class GenomeComparisonServerTest {
         String configFilePath = System.getenv("KB_DEPLOYMENT_CONFIG");
         File deploy = new File(configFilePath);
         Ini ini = new Ini(deploy);
-        config = ini.get("GenomeComparison");
+        config = ini.get("GenomeProteomeComparison");
         wsClient = new WorkspaceClient(new URL(config.get("workspace-url")), token);
-        wsClient.setAuthAllowedForHttp(true);
+        wsClient.setIsInsecureHttpConnectionAllowed(true);
         // These lines are necessary because we don't want to start linux syslog bridge service
         JsonServerSyslog.setStaticUseSyslog(false);
         JsonServerSyslog.setStaticMlogFile(new File(config.get("scratch"), "test.log").getAbsolutePath());
-        impl = new GenomeComparisonServer();
+        impl = new GenomeProteomeComparisonServer();
         // Upload genomes
         String[] genomeObjNames = {genome1objName, genome2objName};
         for (String genomeObjName : genomeObjNames) {
@@ -87,7 +88,7 @@ public class GenomeComparisonServerTest {
     private static String getWsName() throws Exception {
         if (wsName == null) {
             long suffix = System.currentTimeMillis();
-            wsName = "test_GenomeComparison_" + suffix;
+            wsName = "test_GenomeProteomeComparison_" + suffix;
             wsClient.createWorkspace(new CreateWorkspaceParams().withWorkspace(wsName));
         }
         return wsName;
@@ -95,7 +96,7 @@ public class GenomeComparisonServerTest {
     
     private static RpcContext getContext() {
         return new RpcContext().withProvenance(Arrays.asList(new ProvenanceAction()
-            .withService("GenomeComparison").withMethod("please_never_use_it_in_production")
+            .withService("GenomeProteomeComparison").withMethod("please_never_use_it_in_production")
             .withMethodParams(new ArrayList<UObject>())));
     }
     
@@ -118,9 +119,9 @@ public class GenomeComparisonServerTest {
                 new BlastProteomesParams().withGenome1id(genome1objName).withGenome1ws(getWsName())
                 .withGenome2id(genome2objName).withGenome2ws(getWsName()).withOutputId(outputObjName)
                 .withOutputWs(getWsName()), token, getContext());
-        ProteomeComparison protcmp = wsClient.getObjects(Arrays.asList(
-                new ObjectIdentity().withWorkspace(getWsName()).withName(outputObjName)))
-                .get(0).getData().asClassInstance(ProteomeComparison.class);
+        ProteomeComparison protcmp = wsClient.getObjects2(new GetObjects2Params().withObjects(Arrays.asList(
+                new ObjectSpecification().withWorkspace(getWsName()).withName(outputObjName))))
+                .getData().get(0).getData().asClassInstance(ProteomeComparison.class);
         int size = 0;
         for (List<?> row : protcmp.getData1())
             size += row.size();

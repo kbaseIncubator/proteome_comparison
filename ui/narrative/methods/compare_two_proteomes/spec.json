@@ -65,7 +65,7 @@
   "behavior" : {
     "service-mapping" : {
       "url" : "",
-      "name" : "GenomeComparison",
+      "name" : "GenomeProteomeComparison",
       "method" : "blast_proteomes",
       "input_mapping" : [
         {

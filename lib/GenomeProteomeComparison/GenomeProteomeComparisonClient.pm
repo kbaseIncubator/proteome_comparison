@@ -1,4 +1,4 @@
-package GenomeComparison::GenomeComparisonClient;
+package GenomeProteomeComparison::GenomeProteomeComparisonClient;
 
 use JSON::RPC::Client;
 use POSIX;
@@ -21,7 +21,7 @@ our $VERSION = "0.1.0";
 
 =head1 NAME
 
-GenomeComparison::GenomeComparisonClient
+GenomeProteomeComparison::GenomeProteomeComparisonClient
 
 =head1 DESCRIPTION
 
@@ -37,7 +37,7 @@ sub new
     
 
     my $self = {
-	client => GenomeComparison::GenomeComparisonClient::RpcClient->new,
+	client => GenomeProteomeComparison::GenomeProteomeComparisonClient::RpcClient->new,
 	url => $url,
 	headers => [],
     };
@@ -111,7 +111,7 @@ sub new
 
 =head2 blast_proteomes
 
-  $job_id = $obj->blast_proteomes($input)
+  $output_ref = $obj->blast_proteomes($input)
 
 =over 4
 
@@ -120,8 +120,8 @@ sub new
 =begin html
 
 <pre>
-$input is a GenomeComparison.blast_proteomes_params
-$job_id is a string
+$input is a GenomeProteomeComparison.blast_proteomes_params
+$output_ref is a GenomeProteomeComparison.ws_protcmp_id
 blast_proteomes_params is a reference to a hash where the following keys are defined:
 	genome1ws has a value which is a string
 	genome1id has a value which is a string
@@ -131,6 +131,7 @@ blast_proteomes_params is a reference to a hash where the following keys are def
 	max_evalue has a value which is a string
 	output_ws has a value which is a string
 	output_id has a value which is a string
+ws_protcmp_id is a string
 
 </pre>
 
@@ -138,8 +139,8 @@ blast_proteomes_params is a reference to a hash where the following keys are def
 
 =begin text
 
-$input is a GenomeComparison.blast_proteomes_params
-$job_id is a string
+$input is a GenomeProteomeComparison.blast_proteomes_params
+$output_ref is a GenomeProteomeComparison.ws_protcmp_id
 blast_proteomes_params is a reference to a hash where the following keys are defined:
 	genome1ws has a value which is a string
 	genome1id has a value which is a string
@@ -149,6 +150,7 @@ blast_proteomes_params is a reference to a hash where the following keys are def
 	max_evalue has a value which is a string
 	output_ws has a value which is a string
 	output_id has a value which is a string
+ws_protcmp_id is a string
 
 
 =end text
@@ -186,7 +188,7 @@ blast_proteomes_params is a reference to a hash where the following keys are def
 
     my $url = $self->{url};
     my $result = $self->{client}->call($url, $self->{headers}, {
-	    method => "GenomeComparison.blast_proteomes",
+	    method => "GenomeProteomeComparison.blast_proteomes",
 	    params => \@args,
     });
     if ($result) {
@@ -217,7 +219,7 @@ sub status
     }
     my $url = $self->{url};
     my $result = $self->{client}->call($url, $self->{headers}, {
-        method => "GenomeComparison.status",
+        method => "GenomeProteomeComparison.status",
         params => \@args,
     });
     if ($result) {
@@ -242,7 +244,7 @@ sub status
 sub version {
     my ($self) = @_;
     my $result = $self->{client}->call($self->{url}, $self->{headers}, {
-        method => "GenomeComparison.version",
+        method => "GenomeProteomeComparison.version",
         params => [],
     });
     if ($result) {
@@ -285,87 +287,14 @@ sub _validate_version {
         );
     }
     if ($sMinor > $cMinor) {
-        warn "New client version available for GenomeComparison::GenomeComparisonClient\n";
+        warn "New client version available for GenomeProteomeComparison::GenomeProteomeComparisonClient\n";
     }
     if ($sMajor == 0) {
-        warn "GenomeComparison::GenomeComparisonClient version is $svr_version. API subject to change.\n";
+        warn "GenomeProteomeComparison::GenomeProteomeComparisonClient version is $svr_version. API subject to change.\n";
     }
 }
 
 =head1 TYPES
-
-
-
-=head2 ws_genome_id
-
-=over 4
-
-
-
-=item Description
-
-A workspace ID that references a Genome data object.
-@id ws KBaseGenomes.Genome
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a string
-</pre>
-
-=end html
-
-=begin text
-
-a string
-
-=end text
-
-=back
-
-
-
-=head2 hit
-
-=over 4
-
-
-
-=item Description
-
-int inner_pos - position of gene name in inner genome (see dataN field in ProteomeComparison
-int score - bit score of blast alignment multiplied by 100
-int percent_of_best_score - best bit score of all hits connected to either of two genes from this hit
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a reference to a list containing 3 items:
-0: (inner_pos) an int
-1: (score) an int
-2: (percent_of_best_score) an int
-
-</pre>
-
-=end html
-
-=begin text
-
-a reference to a list containing 3 items:
-0: (inner_pos) an int
-1: (score) an int
-2: (percent_of_best_score) an int
-
-
-=end text
-
-=back
 
 
 
@@ -375,28 +304,36 @@ a reference to a list containing 3 items:
 
 
 
+=item Definition
+
+=begin html
+
+<pre>
+a GenomeComparison.ProteomeComparison
+</pre>
+
+=end html
+
+=begin text
+
+a GenomeComparison.ProteomeComparison
+
+=end text
+
+=back
+
+
+
+=head2 ws_protcmp_id
+
+=over 4
+
+
+
 =item Description
 
-string genome1ws - workspace of genome1 (depricated, use genome1ref instead)
-string genome1id - id of genome1 (depricated, use genome1ref instead)
-ws_genome_id genome1ref - reference to genome1
-string genome2ws - workspace of genome2 (depricated, use genome2ref instead)
-string genome2id - id of genome2 (depricated, use genome2ref instead)
-ws_genome_id genome2ref - reference to genome2
-float sub_bbh_percent - optional parameter, minimum percent of bit score compared to best bit score, default is 90
-string max_evalue -  optional parameter, maximum evalue, default is 1e-10
-list<string> proteome1names - names of genes of genome1
-mapping<string, int> proteome1map - map from genes of genome1 to their positions
-list<string> proteome2names - names of genes of genome2
-mapping<string, int> proteome2map - map from genes of genome2 to their positions
-list<list<hit>> data1 - outer list iterates over positions of genome1 gene names, inner list iterates over hits from given gene1 to genome2
-list<list<hit>> data2 - outer list iterates over positions of genome2 gene names, inner list iterates over hits from given gene2 to genome1
-@optional genome1ws
-@optional genome1id
-@optional genome1ref
-@optional genome2ws
-@optional genome2id
-@optional genome2ref
+A workspace ID that references a Genome data object.
+@id ws ProteomeComparison
 
 
 =item Definition
@@ -404,44 +341,14 @@ list<list<hit>> data2 - outer list iterates over positions of genome2 gene names
 =begin html
 
 <pre>
-a reference to a hash where the following keys are defined:
-genome1ws has a value which is a string
-genome1id has a value which is a string
-genome1ref has a value which is a GenomeComparison.ws_genome_id
-genome2ws has a value which is a string
-genome2id has a value which is a string
-genome2ref has a value which is a GenomeComparison.ws_genome_id
-sub_bbh_percent has a value which is a float
-max_evalue has a value which is a string
-proteome1names has a value which is a reference to a list where each element is a string
-proteome1map has a value which is a reference to a hash where the key is a string and the value is an int
-proteome2names has a value which is a reference to a list where each element is a string
-proteome2map has a value which is a reference to a hash where the key is a string and the value is an int
-data1 has a value which is a reference to a list where each element is a reference to a list where each element is a GenomeComparison.hit
-data2 has a value which is a reference to a list where each element is a reference to a list where each element is a GenomeComparison.hit
-
+a string
 </pre>
 
 =end html
 
 =begin text
 
-a reference to a hash where the following keys are defined:
-genome1ws has a value which is a string
-genome1id has a value which is a string
-genome1ref has a value which is a GenomeComparison.ws_genome_id
-genome2ws has a value which is a string
-genome2id has a value which is a string
-genome2ref has a value which is a GenomeComparison.ws_genome_id
-sub_bbh_percent has a value which is a float
-max_evalue has a value which is a string
-proteome1names has a value which is a reference to a list where each element is a string
-proteome1map has a value which is a reference to a hash where the key is a string and the value is an int
-proteome2names has a value which is a reference to a list where each element is a string
-proteome2map has a value which is a reference to a hash where the key is a string and the value is an int
-data1 has a value which is a reference to a list where each element is a reference to a list where each element is a GenomeComparison.hit
-data2 has a value which is a reference to a list where each element is a reference to a list where each element is a GenomeComparison.hit
-
+a string
 
 =end text
 
@@ -507,7 +414,7 @@ output_id has a value which is a string
 
 =cut
 
-package GenomeComparison::GenomeComparisonClient::RpcClient;
+package GenomeProteomeComparison::GenomeProteomeComparisonClient::RpcClient;
 use base 'JSON::RPC::Client';
 use POSIX;
 use strict;

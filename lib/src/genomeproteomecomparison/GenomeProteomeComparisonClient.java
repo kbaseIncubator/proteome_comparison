@@ -1,4 +1,4 @@
-package genomecomparison;
+package genomeproteomecomparison;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
@@ -14,11 +14,11 @@ import us.kbase.common.service.RpcContext;
 import us.kbase.common.service.UnauthorizedException;
 
 /**
- * <p>Original spec-file module name: GenomeComparison</p>
+ * <p>Original spec-file module name: GenomeProteomeComparison</p>
  * <pre>
  * </pre>
  */
-public class GenomeComparisonClient {
+public class GenomeProteomeComparisonClient {
     private JsonClientCaller caller;
     private String serviceVersion = null;
 
@@ -26,7 +26,7 @@ public class GenomeComparisonClient {
     /** Constructs a client with a custom URL and no user credentials.
      * @param url the URL of the service.
      */
-    public GenomeComparisonClient(URL url) {
+    public GenomeProteomeComparisonClient(URL url) {
         caller = new JsonClientCaller(url);
     }
     /** Constructs a client with a custom URL.
@@ -36,7 +36,7 @@ public class GenomeComparisonClient {
      * @throws IOException if an IOException occurs when checking the token's
      * validity.
      */
-    public GenomeComparisonClient(URL url, AuthToken token) throws UnauthorizedException, IOException {
+    public GenomeProteomeComparisonClient(URL url, AuthToken token) throws UnauthorizedException, IOException {
         caller = new JsonClientCaller(url, token);
     }
 
@@ -48,7 +48,7 @@ public class GenomeComparisonClient {
      * @throws IOException if an IOException occurs when checking the user's
      * credentials.
      */
-    public GenomeComparisonClient(URL url, String user, String password) throws UnauthorizedException, IOException {
+    public GenomeProteomeComparisonClient(URL url, String user, String password) throws UnauthorizedException, IOException {
         caller = new JsonClientCaller(url, user, password);
     }
 
@@ -62,7 +62,7 @@ public class GenomeComparisonClient {
      * @throws IOException if an IOException occurs when checking the user's
      * credentials.
      */
-    public GenomeComparisonClient(URL url, String user, String password, URL auth) throws UnauthorizedException, IOException {
+    public GenomeProteomeComparisonClient(URL url, String user, String password, URL auth) throws UnauthorizedException, IOException {
         caller = new JsonClientCaller(url, user, password, auth);
     }
 
@@ -165,8 +165,8 @@ public class GenomeComparisonClient {
      * <p>Original spec-file function name: blast_proteomes</p>
      * <pre>
      * </pre>
-     * @param   input   instance of type {@link genomecomparison.BlastProteomesParams BlastProteomesParams} (original type "blast_proteomes_params")
-     * @return   parameter "job_id" of String
+     * @param   input   instance of type {@link genomeproteomecomparison.BlastProteomesParams BlastProteomesParams} (original type "blast_proteomes_params")
+     * @return   parameter "output_ref" of original type "ws_protcmp_id" (A workspace ID that references a Genome data object. @id ws ProteomeComparison)
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
@@ -174,14 +174,14 @@ public class GenomeComparisonClient {
         List<Object> args = new ArrayList<Object>();
         args.add(input);
         TypeReference<List<String>> retType = new TypeReference<List<String>>() {};
-        List<String> res = caller.jsonrpcCall("GenomeComparison.blast_proteomes", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        List<String> res = caller.jsonrpcCall("GenomeProteomeComparison.blast_proteomes", args, retType, true, true, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 
     public Map<String, Object> status(RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         TypeReference<List<Map<String, Object>>> retType = new TypeReference<List<Map<String, Object>>>() {};
-        List<Map<String, Object>> res = caller.jsonrpcCall("GenomeComparison.status", args, retType, true, false, jsonRpcContext, this.serviceVersion);
+        List<Map<String, Object>> res = caller.jsonrpcCall("GenomeProteomeComparison.status", args, retType, true, false, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 }

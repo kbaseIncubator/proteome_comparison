@@ -1,7 +1,6 @@
-SERVICE = genomecomparison
-SERVICE_CAPS = GenomeComparison
-SPEC_FILE = GenomeComparison.spec
-URL = https://kbase.us/services/genomecomparison
+SERVICE = genomeproteomecomparison
+SERVICE_CAPS = GenomeProteomeComparison
+SPEC_FILE = GenomeProteomeComparison.spec
 DIR = $(shell pwd)
 LIB_DIR = lib
 SCRIPTS_DIR = scripts

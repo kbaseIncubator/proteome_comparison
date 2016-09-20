@@ -1,5 +1,5 @@
 module-name:
-    GenomeComparison
+    GenomeProteomeComparison
 
 module-description:
     A KBase module

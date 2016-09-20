@@ -1,6 +1,6 @@
-package genomecomparison.registration;
+package genomeproteomecomparison.registration;
 
-import genomecomparison.Utils;
+import genomeproteomecomparison.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

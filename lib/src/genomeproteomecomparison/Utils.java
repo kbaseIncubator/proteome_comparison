@@ -1,4 +1,4 @@
-package genomecomparison;
+package genomeproteomecomparison;
 
 import java.io.IOException;
 import java.io.InputStream;

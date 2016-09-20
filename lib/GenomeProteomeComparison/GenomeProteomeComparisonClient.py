@@ -17,7 +17,7 @@ except:
     from baseclient import BaseClient as _BaseClient  # @Reimport
 
 
-class GenomeComparison(object):
+class GenomeProteomeComparison(object):
 
     def __init__(
             self, url=None, timeout=30 * 60, user_id=None,
@@ -47,12 +47,13 @@ class GenomeComparison(object):
            "genome2ws" of String, parameter "genome2id" of String, parameter
            "sub_bbh_percent" of Double, parameter "max_evalue" of String,
            parameter "output_ws" of String, parameter "output_id" of String
-        :returns: instance of String
+        :returns: instance of type "ws_protcmp_id" (A workspace ID that
+           references a Genome data object. @id ws ProteomeComparison)
         """
         return self._client.call_method(
-            'GenomeComparison.blast_proteomes',
+            'GenomeProteomeComparison.blast_proteomes',
             [input], self._service_ver, context)
 
     def status(self, context=None):
-        return self._client.call_method('GenomeComparison.status',
+        return self._client.call_method('GenomeProteomeComparison.status',
                                         [], self._service_ver, context)

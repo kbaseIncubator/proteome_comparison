@@ -1,4 +1,4 @@
-package genomecomparison;
+package genomeproteomecomparison;
 
 import genomeannotationapi.FeatureData;
 import genomeannotationapi.GenomeAnnotationAPIClient;
@@ -6,6 +6,7 @@ import genomeannotationapi.GenomeAnnotationData;
 import genomeannotationapi.GetCombinedDataParams;
 import genomeannotationapi.ProteinData;
 import genomeannotationapi.Region;
+import genomecomparison.ProteomeComparison;
 
 import java.io.File;
 import java.net.URL;

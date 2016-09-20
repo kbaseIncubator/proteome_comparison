@@ -1,5 +1,5 @@
 
-package genomecomparison;
+package genomeproteomecomparison;
 
 import java.util.HashMap;
 import java.util.Map;
