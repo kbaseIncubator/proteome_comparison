@@ -1,4 +1,4 @@
-<project name="GenomeComparison" default="compile" basedir=".">
+<project name="GenomeProteomeComparison" default="compile" basedir=".">
 
   <description>
       Build JAR and WAR files for GenomeComparison 
@@ -15,7 +15,7 @@
   <property name="war.file" value="GenomeComparison.war"/>
   <property name="scripts" location="scripts"/>
   <property name="web.xml" location="${scripts}/web.xml"/>
-  <property name="exec.cmd.file" value="run_GenomeComparison_async_job.sh"/>
+  <property name="exec.cmd.file" value="run_GenomeProteomeComparison_async_job.sh"/>
   <property name="startup.cmd.file" value="start_server.sh"/>
 
   <fileset dir="${jars.dir}" id="lib">
@@ -91,7 +91,7 @@ commit=${git.commit}</echo>
     <property name="jar.absolute.path" location="${dist}/${jar.file}"/>
     <pathconvert targetos="unix" property="lib.classpath" refid="compile.classpath"/>
     <echo file="${bin}/${exec.cmd.file}">#!/bin/bash
-java -cp ${jar.absolute.path}:${lib.classpath} genomecomparison.GenomeComparisonServer $1 $2 $3
+java -cp ${jar.absolute.path}:${lib.classpath} genomeproteomecomparison.GenomeProteomeComparisonServer $1 $2 $3
     </echo>
     <chmod file="${bin}/${exec.cmd.file}" perm="a+x"/>
   </target>

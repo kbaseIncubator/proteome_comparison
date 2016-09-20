@@ -19,7 +19,7 @@ RUN mkdir -p /kb/module/work
 
 WORKDIR /kb/module
 
-RUN make
+RUN make all
 
 ENTRYPOINT [ "./scripts/entrypoint.sh" ]
 

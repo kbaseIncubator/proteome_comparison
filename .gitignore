@@ -2,3 +2,4 @@ test_local
 bin
 sdk.cfg
 classes
+dist
