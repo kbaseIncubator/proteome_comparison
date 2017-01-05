@@ -1,11 +1,8 @@
 package genomeproteomecomparison;
 
-import genomeannotationapi.FeatureData;
 import genomeannotationapi.GenomeAnnotationAPIClient;
-import genomeannotationapi.GenomeAnnotationData;
-import genomeannotationapi.GetCombinedDataParams;
-import genomeannotationapi.ProteinData;
-import genomeannotationapi.Region;
+import genomeannotationapi.GenomeSelectorV1;
+import genomeannotationapi.GetGenomeParamsV1;
 import genomecomparison.ProteomeComparison;
 
 import java.io.File;
@@ -18,6 +15,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import kbasegenomes.Feature;
+import kbasegenomes.Genome;
 
 import datafileutil.DataFileUtilClient;
 
@@ -193,29 +193,23 @@ public class BlastProteomes {
         URL callbackUrl = new URL(System.getenv("SDK_CALLBACK_URL"));
         GenomeAnnotationAPIClient gaapi = new GenomeAnnotationAPIClient(callbackUrl, token);
         gaapi.setIsInsecureHttpConnectionAllowed(true);
-        GenomeAnnotationData gad = gaapi.getCombinedData(
-                new GetCombinedDataParams().withRef(ws + "/" + genomeId)
-                .withExcludeGenes(1L).withExcludeCdsIdsByGeneId(1L));
+        Genome genome = gaapi.getGenomeV1(
+                new GetGenomeParamsV1().withGenomes(
+                        Arrays.asList(new GenomeSelectorV1().withRef(ws + "/" + genomeId)))
+                        .withIncludedFeatureFields(Arrays.asList("id", "location",
+                                "protein_translation", "type"))).getGenomes().get(0).getData();
 		List<InnerFeature> ret = new ArrayList<InnerFeature>();
-		Map<String, FeatureData> cdsMap = gad.getFeatureByIdByType().get(gad.getCdsType());
-		Map<String, ProteinData> protMap = gad.getProteinByCdsId();
-		for (String cdsId : cdsMap.keySet()) {
-		    FeatureData cds = cdsMap.get(cdsId);
+		for (Feature feature : genome.getFeatures()) {
+            String seq = feature.getProteinTranslation();
+            if (seq == null)
+                continue;
+            seq = seq.trim();
+            if (seq.isEmpty())
+                continue;
 			InnerFeature inf = new InnerFeature();
-			inf.protName = cdsId;
-			ProteinData prot = protMap.get(cdsId);
-			if (prot == null)
-			    continue;
-			inf.seq = prot.getProteinAminoAcidSequence();
-			if (inf.seq == null)
-				continue;
-			inf.seq = inf.seq.trim();
-			if (inf.seq.isEmpty())
-				continue;
-			Region loc = cds.getFeatureLocations().get(0);
-			Tuple4<String, Long, String, Long> location = 
-			        new Tuple4<String, Long, String, Long>().withE1(loc.getContigId())
-			        .withE2(loc.getStart()).withE3(loc.getStrand()).withE4(loc.getLength());
+			inf.protName = feature.getId();
+			inf.seq = seq;
+			Tuple4<String, Long, String, Long> location = feature.getLocation().get(0);
 			inf.contigName = location.getE1();
 			int realStart = (int)(long)location.getE2();
 			String dir = location.getE3();
