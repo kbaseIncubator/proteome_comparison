@@ -78,11 +78,11 @@ parameters :
 
 description : |
     <p>This method performs an all-vs-all proteome comparison for a pair of species based on BLAST output. The algorithm is similar to the BUS approach. It represents the best match of every gene as a set of genes instead of a single best hit, which makes it more robust to slight differences in sequence similarity. The similarities between the genes are treated as a bipartite graph connecting genes between two species by edges weighed as bit-scores of corresponding protein pairwise alignments. For every edge, the "Sub-optimal Best Bidirectional Hit Ratio" is calculated as a ratio of the weight of given edge to the best weight among edges connected to this edge. If this ratio is 100% then the edge is a true Best Bidirectional Hit (in terms of bit-score). All edges with a ratio below a specified minimum threshold are filtered out.</p>
-    
+
     <pThe output of this method is visualized as a dot plot matrix showing pairs of similar proteins determined from the algorithm. This dot plot can be navigated by users with the provided zoom and scroll functions. Hovering over colored dots in the dot plot displays information about that pair of proteins. Clicking on a dot displays a column browser which allows one to navigate to the next or previous similar proteins in either genome. A larger red dot in the plot indicates the current pair of proteins.</p>
-        
+
     <p><a href="http://kbase.us/compare-two-proteomes-method/" target="_blank">Tutorial for Compare Two Proteomes Method</a></p>
-    
+
     <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
     Roman Sutormin. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
 
@@ -94,7 +94,7 @@ publications :
     -
         pmid: 15285895
         display-text: |
-           Kellis M, Patterson N, Birren B, Berger B, Lander ES (2004) Methods in Comparative Genomics: Genome Correspondence, Gene Identification and Regulatory Motif Discovery. Journal of Computational Biology 11: 319–355. doi:10.1089/1066527041410319.
+            Kellis M, Patterson N, Birren B, Berger B, Lander ES. Methods in comparative genomics: genome correspondence, gene identification and regulatory motif discovery. J Comput Biol. 2004;11: 319–355. doi:10.1089/1066527041410319
         link: http://www.ncbi.nlm.nih.gov/pubmed/15285895
     -
         display-text: |
