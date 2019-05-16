@@ -4,12 +4,10 @@
 name     : Compare Two Proteomes
 
 tooltip  : |
-    Perform a comparison of two proteomes, producing a dot plot matrix and a table of gene differences.
+    Compute bi-directional-best-hits between the proteins present in two input Genomes. Produces a dot plot matrix showing corresponding genes in two Genomes, as well as a table of gene differences.
 
 screenshots :
-
-    - compare_two_proteomes_input.png
-    - compare_two_proteomes_output.png
+    []
 
 icon: kb-purple.png
 
@@ -35,57 +33,48 @@ suggestions :
 parameters :
     param0 :
         ui-name : |
-            Genome1 ID
+            First Genome
         short-hint : |
-            Source genome 1
-        long-hint  : |
-            Source genome 1
+            First Genome to compare.
 
 
     param1 :
         ui-name : |
-            Genome2 ID
+            Second Genome
         short-hint : |
-            Source genome 2
-        long-hint  : |
-            Source genome 2
+            Second Genome to compare.
 
 
     param2 :
         ui-name : |
-            Output Proteome Comparison
+            Output Proteome Comparison ID
         short-hint : |
-            Output proteome comparison
-        long-hint  : |
-            Output proteome comparison
+            the output proteome comparison ID.
 
     param_max_eval :
         ui-name : |
-            Max. e-value
+            Max e-value
         short-hint : |
-            Maximum e-value threshold
-        long-hint  : |
-            Maximum e-value threshold
+            The maximum e-value threshold.
+
 
     param_min_perc :
         ui-name : |
             Minimum sub-optimal BBH ratio
         short-hint : |
-            Minimum threshold for percent ratio between hit bit-score and bit-score of related best bi-directional hit
-        long-hint  : |
-            Minimum threshold for percent ratio between hit bit-score and bit-score of related best bi-directional hit
+            The minimum threshold for percent ratio between hit bit-score and bit-score of related best bi-directional hit.
 
 
 description : |
-    <p>This method performs an all-vs-all proteome comparison for a pair of species based on BLAST output. The algorithm is similar to the BUS approach. It represents the best match of every gene as a set of genes instead of a single best hit, which makes it more robust to slight differences in sequence similarity. The similarities between the genes are treated as a bipartite graph connecting genes between two species by edges weighed as bit-scores of corresponding protein pairwise alignments. For every edge, the "Sub-optimal Best Bidirectional Hit Ratio" is calculated as a ratio of the weight of given edge to the best weight among edges connected to this edge. If this ratio is 100% then the edge is a true Best Bidirectional Hit (in terms of bit-score). All edges with a ratio below a specified minimum threshold are filtered out.</p>
+    <p>This App performs an all-vs-all protein comparison for a pair of species based on BLAST output. The algorithm is similar to the BUS approach. It represents the best match of every gene as a set of genes instead of a single best hit, which makes it more robust to slight differences in sequence similarity. The similarities between the genes are treated as a bipartite graph connecting genes between two species by edges weighed as bit-scores of corresponding protein pairwise alignments. For every edge, the "Sub-optimal Best Bidirectional Hit Ratio" is calculated as a ratio of the weight of given edge to the best weight among edges connected to this edge. If this ratio is 100% then the edge is a true Best Bidirectional Hit (in terms of bit-score). All edges with a ratio below a specified minimum threshold are filtered out.</p>
 
-    <pThe output of this method is visualized as a dot plot matrix showing pairs of similar proteins determined from the algorithm. This dot plot can be navigated by users with the provided zoom and scroll functions. Hovering over colored dots in the dot plot displays information about that pair of proteins. Clicking on a dot displays a column browser which allows one to navigate to the next or previous similar proteins in either genome. A larger red dot in the plot indicates the current pair of proteins.</p>
+    <p>The output of this App is visualized as a dot plot matrix showing pairs of similar proteins determined from the algorithm. This dot plot can be navigated by users with the provided zoom and scroll functions. Hovering over colored dots in the dot plot displays information about that pair of proteins. Clicking on a dot displays a column browser which allows one to navigate to the next or previous similar proteins in either genome. A larger red dot in the plot indicates the current pair of proteins.</p>
 
-    <p><a href="http://kbase.us/compare-two-proteomes-method/" target="_blank">Tutorial for Compare Two Proteomes Method</a></p>
+    <p>The advanced parameter for 'Minimum sub-optimal BBH ratio' affects the dot color. The BBH stands for 'bi-directional best hit' and has a default of 90. The dots in white are better than this ratio and the dots in red are lower than this value.</p>
 
-    <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
-    Roman Sutormin. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
+    <p>A tutorial for how to use the Compare Two Proteomes App can be found <a href="http://kbase.us/compare-two-proteomes-method/" target="_blank">here</a>.</p>
 
+    <p><strong>Team members who developed &amp; deployed algorithm in KBase:</strong> Roman Sutormin. For questions, please <a href=”http://kbase.us/contact-us/”>contact us</a>.</p>
 
 
 technical-description : ""
