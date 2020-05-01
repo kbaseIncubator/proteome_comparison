@@ -19,9 +19,9 @@ import us.kbase.common.service.RpcContext;
  */
 public class GenomeProteomeComparisonServer extends JsonServerServlet {
     private static final long serialVersionUID = 1L;
-    private static final String version = "0.0.4";
-    private static final String gitUrl = "https://github.com/rsutormin/GenomeProteomeComparison";
-    private static final String gitCommitHash = "b37d7218f3a65a19c8e587ae7f3e031e94373751";
+    private static final String version = "0.0.8";
+    private static final String gitUrl = "https://github/mrcreosote/genomeproteomecomparison.git";
+    private static final String gitCommitHash = "b342f79a47d847e80261092d41bf04930f5371ae";
 
     //BEGIN_CLASS_HEADER
     //END_CLASS_HEADER
